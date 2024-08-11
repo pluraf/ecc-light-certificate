@@ -25,17 +25,21 @@
  */
 
 #if defined (SECP128R1) || defined (SECP128R2)
-#define KEY_BIT_LEN 128
+  #define KEY_BIT_LEN 128
 #else
-#if defined (SECP160K1) || defined (SECP160R1) || defined (SECP160R2)
-#define KEY_BIT_LEN 160
-#else
-#if defined (SECP192K1) || defined (SECP192R1)
-#define KEY_BIT_LEN 192
-#else
-#define KEY_BIT_LEN 128
-#endif /* 192 */
-#endif /* 160 */
+  #if defined (SECP160K1) || defined (SECP160R1) || defined (SECP160R2)
+    #define KEY_BIT_LEN 160
+  #else
+    #if defined (SECP192K1) || defined (SECP192R1)
+      #define KEY_BIT_LEN 192
+    #else
+      #if defined (SECP256R1)
+        #define KEY_BIT_LEN 256
+      #else
+        #error "UNKNOWN KEY LEN"
+      #endif /* 256 */
+    #endif /* 192 */
+  #endif /* 160 */
 #endif /* 128 */
 
 

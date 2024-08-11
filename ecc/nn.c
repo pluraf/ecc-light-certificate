@@ -455,7 +455,12 @@ NN_ModMultOpt(NN_DIGIT * a, NN_DIGIT * b, NN_DIGIT * c, NN_DIGIT * d, NN_DIGIT *
     len_t1 = len_t2;
     len_t2 = omega_mul(t2, pt1, omega, len_t2);
     memset(pt1, 0, len_t1*NN_DIGIT_LEN);
-    NN_Add(t1, t2, t1, MAX(KEYDIGITS,len_t2)+1);
+    NN_UINT a_len = MAX(KEYDIGITS, len_t2);
+    NN_DIGIT carry = NN_Add(t1, t2, t1, a_len);
+    if (carry != 0) {
+      len_t2 = a_len + 1;
+      t1[a_len] = carry;
+    }
   }
 
   while(NN_Cmp(t1, d, digits) > 0) {
@@ -553,7 +558,12 @@ NN_ModSqrOpt(NN_DIGIT * a, NN_DIGIT * b, NN_DIGIT * d, NN_DIGIT * omega, NN_UINT
     len_t1 = len_t2;
     len_t2 = omega_mul(t2, pt1, omega, len_t2);
     memset(pt1, 0, len_t1*NN_DIGIT_LEN);
-    NN_Add(t1, t2, t1, MAX(KEYDIGITS,len_t2)+1);
+    NN_UINT a_len = MAX(KEYDIGITS, len_t2);
+    NN_DIGIT carry = NN_Add(t1, t2, t1, a_len);
+    if (carry != 0) {
+      len_t2 = a_len + 1;
+      t1[a_len] = carry;
+    }
   }
 
   while(NN_Cmp(t1, d, digits) > 0) {
